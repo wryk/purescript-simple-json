@@ -2,11 +2,9 @@ module Test.Util where
 
 import Prelude
 
-import Record (get)
+import Data.Record (get)
 import Type.Prelude (class IsSymbol, SProxy(..))
-import Type.Row (RLProxy(..))
-import Prim.RowList (class RowToList, Cons, Nil, kind RowList)
-import Prim.Row as Row
+import Type.Row (class RowToList, Cons, Nil, RLProxy(..), kind RowList)
 
 -- | Check two records of the same type for equality.
 equal
@@ -25,7 +23,7 @@ instance equalFieldsCons
   ::
   ( IsSymbol name
   , Eq ty
-  , Row.Cons name ty tailRow row
+  , RowCons name ty tailRow row
   , EqualFields tail row
   ) => EqualFields (Cons name ty tail) row where
   equalFields _ a b = get' a == get' b && rest
